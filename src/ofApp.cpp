@@ -20,8 +20,7 @@ void ofApp::setup(){
     distance = 0;
     
     auto devices = stream.getDeviceList();
-    for ( auto &device : devices)
-    {
+    for ( auto &device : devices){
         std::cout << device << std::endl;
     }
     
@@ -55,7 +54,9 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
     grabber.update();
+    
     if (grabber.isFrameNew()){
         
         grabberPix = grabber.getPixels();
@@ -64,8 +65,6 @@ void ofApp::update(){
         grabberPix.resize(frameWidth, frameHeight);
         grabberBuffer.resize(frameWidth, frameHeight);
         grabberBuffer = grabberPix;
-        
-        
         
         for(int x = 0; x < frameWidth; x++){
             for(int y = 0; y < frameHeight; y++){
@@ -123,9 +122,7 @@ void ofApp::update(){
 //                        grabberBuffer.setColor(x, y, pulledColor);
 //                    }
                     
-                }
-                else
-                {
+                } else {
 
                     int frameIndex = ofMap(average, 0, 255, (numFrames - smoothSoundValue) - 1, numFrames - 1, true);
                     grabberPix[left + 0] = rValue;
@@ -137,7 +134,7 @@ void ofApp::update(){
                     
                 }
                 
-                if(average > pixelThresh){
+                if (average > pixelThresh){
                     
                     ofColor pulledColor = frames[0].getColor(x,y);
                     grabberBuffer.setColor(x, y, pulledColor);
@@ -152,10 +149,10 @@ void ofApp::update(){
 
         while (frames.size() > numFrames){
             
-            
             frames.erase(frames.begin());
             
         }
+        
     }
     
     finalTex.loadData(grabberBuffer);
@@ -164,23 +161,24 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    
     ofBackgroundGradient(ofColor(0), ofColor(0), OF_GRADIENT_CIRCULAR);
     finalTex.draw(ofGetWidth()/2 - finalTex.getWidth()/2, ofGetHeight()/2 - finalTex.getHeight()/2);
     string frameStr = "frame rate:: " + ofToString(ofGetFrameRate());
     //ofDrawBitmapString(ofToString(smoothedVol), 15, 15);
     ofDrawBitmapString(ofToString(average), 15, 15);
     panel.draw();
+    
 }
 
-void ofApp::audioIn(ofSoundBuffer &input)
-{
+void ofApp::audioIn(ofSoundBuffer &input){
     double currentVol;
     int numCounted = 0;
     int channels = input.getNumChannels();
     
     // calculate RMS (root-mean-square) of audio buffer
-    for (std::size_t i = 0; i < input.getNumFrames(); i++)
-    {
+    for (std::size_t i = 0; i < input.getNumFrames(); i++){
+        
         // collect values at index for left and right channels
         double left = input[i * channels] * 0.5;
         double right = input[i * channels + 1] * 0.5;
@@ -207,58 +205,7 @@ void ofApp::audioIn(ofSoundBuffer &input)
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if (key == 's')
-    {
+    if (key == 's'){
         bUseSmooth = !bUseSmooth;
     }
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
 }

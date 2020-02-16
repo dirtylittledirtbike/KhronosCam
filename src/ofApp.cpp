@@ -172,6 +172,7 @@ void ofApp::draw(){
 }
 
 void ofApp::audioIn(ofSoundBuffer &input){
+    
     double currentVol;
     int numCounted = 0;
     int channels = input.getNumChannels();

@@ -3,6 +3,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
     numFrames = 500;
     frameHeight = 480;
     frameWidth = 640;
@@ -11,7 +12,6 @@ void ofApp::setup(){
     grabberPix.allocate(frameWidth, frameHeight, OF_PIXELS_RGB);
     grabberBuffer.allocate(frameWidth, frameHeight, OF_PIXELS_RGB);
     frames.assign(numFrames, ofPixels());
-    
     
     int bufferSize = 256;
     smoothedVol = 0.0;
